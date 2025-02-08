@@ -1,3 +1,5 @@
+mod intepreter;
+
 use std::{
     fs::File,
     io::{BufRead, BufReader},
@@ -17,7 +19,7 @@ fn main() {
     /// Memory cells length to be used as the data tape. Official implementation used 30k cells.
     const MEMORY_CELLS_LENGTH: usize = 30000;
 
-    let mem_cells = vec![0, MEMORY_CELLS_LENGTH];
+    let mem_cells: Vec<u8> = vec![0; MEMORY_CELLS_LENGTH];
     let args = Args::parse();
 
     match args.file {
