@@ -6,18 +6,21 @@ use std::{
 use camino::Utf8Path;
 use clap::Parser;
 
+/// The struct representing the arguments passed to the compiler
 #[derive(Parser, Debug)]
-pub struct Args {
-    filename: Option<String>,
+struct Args {
+    /// The filename or filepath representing the brainf*ck file to be processed by the compiler
+    file: Option<String>,
 }
 
 fn main() {
-    // const MEMORY_CELLS_LENGTH: usize = 30000;
+    /// Memory cells length to be used as the data tape. Official implementation used 30k cells.
+    const MEMORY_CELLS_LENGTH: usize = 30000;
 
-    // let mem_cells = vec![0, MEMORY_CELLS_LENGTH];
+    let mem_cells = vec![0, MEMORY_CELLS_LENGTH];
     let args = Args::parse();
 
-    match args.filename {
+    match args.file {
         Some(filename) => {
             let path = Utf8Path::new(&filename);
 
@@ -47,6 +50,7 @@ fn main() {
         }
         None => {
             let rl = rustyline::DefaultEditor::new();
+
             match rl {
                 Ok(mut editor) => {
                     let readline = editor.readline("project-8>> ");
