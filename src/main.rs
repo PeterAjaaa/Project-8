@@ -1,12 +1,12 @@
 mod intepreter;
 
 use std::{
-    fs::File,
-    io::{BufRead, BufReader},
+    fs::{self, File},
+    io::{BufRead, BufReader, Read},
 };
 
 use camino::Utf8Path;
-use clap::Parser;
+use clap::{builder::Str, Parser};
 
 /// The struct representing the arguments passed to the compiler
 #[derive(Parser, Debug)]
@@ -19,7 +19,7 @@ fn main() {
     /// Memory cells length to be used as the data tape. Official implementation used 30k cells.
     const MEMORY_CELLS_LENGTH: usize = 30000;
 
-    let mem_cells: Vec<u8> = vec![0; MEMORY_CELLS_LENGTH];
+    let mut mem_cells: Vec<u8> = vec![0; MEMORY_CELLS_LENGTH];
     let args = Args::parse();
 
     match args.file {
@@ -29,19 +29,19 @@ fn main() {
             match path.try_exists() {
                 Ok(_) => match path.canonicalize_utf8() {
                     Ok(path) => {
-                        let file = File::open(path).unwrap();
-                        let reader = BufReader::new(file);
+                        let mut file = File::open(path).unwrap();
+                        let mut buffer = String::new();
 
-                        for line in reader.lines() {
-                            match line {
-                                Ok(content) => {
-                                    println!("{}", content);
-                                }
-                                Err(e) => {
-                                    eprintln!("{}", e);
-                                }
+                        match file.read_to_string(&mut buffer) {
+                            Ok(_) => {
+                                let instruction_input: Vec<char> = buffer.chars().collect();
+                                intepreter::processing::interpret(
+                                    &mut mem_cells,
+                                    instruction_input,
+                                );
                             }
-                        }
+                            Err(e) => eprintln!("{}", e),
+                        };
                     }
                     Err(e) => eprintln!("{}", e),
                 },
