@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug executable 'project-8'",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=project-8",
+                    "--package=project-8"
+                ],
+                "filter": {
+                    "name": "project-8",
+                    "kind": "bin"
+                }
+            },
+            "args": ["test.bf"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "Debug unit tests in executable 'project-8'",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=project-8",
+                    "--package=project-8"
+                ],
+                "filter": {
+                    "name": "project-8",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
