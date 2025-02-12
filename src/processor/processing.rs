@@ -3,7 +3,7 @@ use std::{
     io::{self, Read},
 };
 
-pub fn interpret(data_tape: &mut Vec<u8>, instructions_input: Vec<char>) {
+pub fn process(data_tape: &mut Vec<u8>, instructions_input: Vec<char>) {
     // Refers to the location or the position of the current instruction in the data tapes
     let mut mem_cell_number: usize = 0;
     // Refers to the instruction individual position.

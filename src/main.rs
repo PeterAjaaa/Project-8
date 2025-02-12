@@ -1,12 +1,9 @@
-mod intepreter;
+mod processor;
 
-use std::{
-    fs::{self, File},
-    io::{BufRead, BufReader, Read},
-};
+use std::{fs::File, io::Read};
 
 use camino::Utf8Path;
-use clap::{builder::Str, Parser};
+use clap::Parser;
 
 /// The struct representing the arguments passed to the compiler
 #[derive(Parser, Debug)]
@@ -35,10 +32,7 @@ fn main() {
                         match file.read_to_string(&mut buffer) {
                             Ok(_) => {
                                 let instruction_input: Vec<char> = buffer.chars().collect();
-                                intepreter::processing::interpret(
-                                    &mut mem_cells,
-                                    instruction_input,
-                                );
+                                processor::processing::process(&mut mem_cells, instruction_input);
                             }
                             Err(e) => eprintln!("{}", e),
                         };
