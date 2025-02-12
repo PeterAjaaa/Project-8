@@ -14,7 +14,7 @@ struct Args {
 
 fn main() {
     /// Memory cells length to be used as the data tape. Official implementation used 30k cells.
-    const MEMORY_CELLS_LENGTH: usize = 30000;
+    const MEMORY_CELLS_LENGTH: usize = 30_000;
 
     let mut mem_cells: Vec<u8> = vec![0; MEMORY_CELLS_LENGTH];
     let args = Args::parse();
@@ -32,7 +32,10 @@ fn main() {
                         match file.read_to_string(&mut buffer) {
                             Ok(_) => {
                                 let instruction_input: Vec<char> = buffer.chars().collect();
-                                processor::processing::process(&mut mem_cells, instruction_input);
+                                processor::processing::process_ir(
+                                    &mut mem_cells,
+                                    instruction_input,
+                                );
                             }
                             Err(e) => eprintln!("{}", e),
                         };
