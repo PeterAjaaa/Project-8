@@ -19,7 +19,7 @@
                     "kind": "bin"
                 }
             },
-            "args": ["test.bf"],
+            "args": ["mandelbrot.bf"],
             "cwd": "${workspaceFolder}"
         },
         {
