@@ -4,7 +4,7 @@ Project-8 is a compiler for Brainf*ck programming language with integrated REPL,
 
 ## Performance Report
 
-30 sample, ran without any other application running in the foreground (except the terminal window).
+30 sample, ran without any other application running in the foreground (except the terminal window). Benchmarked using [Hyperfine](https://github.com/sharkdp/hyperfine).
 
 [First iteration](https://github.com/PeterAjaaa/Project-8/tree/2a0bcf4f945527dbdff7fdb6d22afb57edc44c3d):
 
