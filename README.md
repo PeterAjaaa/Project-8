@@ -1,6 +1,6 @@
 # Project-8
 
-Project-8 is a Brainf*ck to Rust transpiler with integrated REPL, written in Rust.
+Project-8 is an interpreter with integrated REPL for Brainf*ck programming language, written in Rust.
 
 ## Performance Report
 
