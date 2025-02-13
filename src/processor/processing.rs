@@ -6,7 +6,7 @@ use std::{
 
 use super::intermediate_representation::Instruction;
 
-/// Generates an IR instruction for the operators, excluding the opening and closing bracket operator.
+/// Generates an IR instruction for the basic operators, excluding the opening and closing bracket operator.
 fn ir_generator_helper(inst: char, iter: &mut Peekable<Iter<char>>) -> Option<Instruction> {
     let mut counter = 1;
 
@@ -38,33 +38,8 @@ fn generate_ir(instructions_input: &Vec<char>) -> Vec<Instruction> {
 
     while let Some(&instruction) = iter.next() {
         match instruction {
-            '>' => {
-                if let Some(ir_inst) = ir_generator_helper('>', &mut iter) {
-                    ir_result_vec.push(ir_inst);
-                }
-            }
-            '<' => {
-                if let Some(ir_inst) = ir_generator_helper('<', &mut iter) {
-                    ir_result_vec.push(ir_inst);
-                }
-            }
-            '+' => {
-                if let Some(ir_inst) = ir_generator_helper('+', &mut iter) {
-                    ir_result_vec.push(ir_inst);
-                }
-            }
-            '-' => {
-                if let Some(ir_inst) = ir_generator_helper('-', &mut iter) {
-                    ir_result_vec.push(ir_inst);
-                }
-            }
-            '.' => {
-                if let Some(ir_inst) = ir_generator_helper('.', &mut iter) {
-                    ir_result_vec.push(ir_inst);
-                }
-            }
-            ',' => {
-                if let Some(ir_inst) = ir_generator_helper(',', &mut iter) {
+            '>' | '<' | '+' | '-' | '.' | ',' => {
+                if let Some(ir_inst) = ir_generator_helper(instruction, &mut iter) {
                     ir_result_vec.push(ir_inst);
                 }
             }
@@ -114,12 +89,12 @@ pub fn process_ir(data_tape: &mut Vec<u8>, instructions_input: Vec<char>) {
             Instruction::FWD(val) => {
                 mem_cell_number += val;
                 if mem_cell_number >= data_tape.len() {
-                    panic!("Pointer out of bounds (add)!");
+                    panic!("Pointer out of bounds (moving forwards)!");
                 }
             }
             Instruction::BWD(val) => {
                 if mem_cell_number == 0 {
-                    panic!("Pointer out of bounds!");
+                    panic!("Pointer out of bounds (moving backwards)!");
                 }
                 mem_cell_number -= val;
             }
