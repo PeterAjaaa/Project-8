@@ -1,6 +1,6 @@
 # Project-8
 
-Project-8 is a compiler for Brainf*ck programming language with integrated REPL, written in Rust.
+Project-8 is a Brainf*ck to Rust transpiler with integrated REPL, written in Rust.
 
 ## Performance Report
 
