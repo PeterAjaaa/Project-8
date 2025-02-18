@@ -32,7 +32,7 @@ fn main() {
                         match file.read_to_string(&mut buffer) {
                             Ok(_) => {
                                 let instruction_input: Vec<char> = buffer.chars().collect();
-                                processor::processing::process_ir(
+                                processor::processing::execute_ir(
                                     &mut mem_cells,
                                     instruction_input,
                                 );

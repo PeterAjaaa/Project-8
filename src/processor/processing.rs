@@ -7,7 +7,7 @@ use std::{
 use super::intermediate_representation::Instruction;
 
 /// Generates an IR instruction for the basic operators, excluding the opening and closing bracket operator.
-fn ir_generator_helper(inst: char, iter: &mut Peekable<Iter<char>>) -> Option<Instruction> {
+fn basic_ir_generator(inst: char, iter: &mut Peekable<Iter<char>>) -> Option<Instruction> {
     let mut counter = 1;
 
     while let Some(&&next_inst) = iter.peek() {
@@ -31,7 +31,7 @@ fn ir_generator_helper(inst: char, iter: &mut Peekable<Iter<char>>) -> Option<In
 }
 
 /// Generate an IR vec to pass to the processing function
-fn generate_ir(instructions_input: &Vec<char>) -> Vec<Instruction> {
+fn create_ir_vec(instructions_input: &Vec<char>) -> Vec<Instruction> {
     let mut ir_result_vec: Vec<Instruction> = Vec::new();
     let mut stack: Vec<usize> = Vec::new();
     let mut iter: Peekable<Iter<char>> = instructions_input.iter().peekable();
@@ -39,7 +39,7 @@ fn generate_ir(instructions_input: &Vec<char>) -> Vec<Instruction> {
     while let Some(&instruction) = iter.next() {
         match instruction {
             '>' | '<' | '+' | '-' | '.' | ',' => {
-                if let Some(ir_inst) = ir_generator_helper(instruction, &mut iter) {
+                if let Some(ir_inst) = basic_ir_generator(instruction, &mut iter) {
                     ir_result_vec.push(ir_inst);
                 }
             }
@@ -74,13 +74,13 @@ fn generate_ir(instructions_input: &Vec<char>) -> Vec<Instruction> {
 }
 
 /// Process the IR instruction and execute it.
-pub fn process_ir(data_tape: &mut Vec<u8>, instructions_input: Vec<char>) {
+pub fn execute_ir(data_tape: &mut Vec<u8>, instructions_input: Vec<char>) {
     // Refers to the location or the position of the current instruction in the data tapes
     let mut mem_cell_number: usize = 0;
     // Refers to the instruction individual position.
     let mut instruction_number: usize = 0;
 
-    let ir_vec = generate_ir(&instructions_input);
+    let ir_vec = create_ir_vec(&instructions_input);
 
     while instruction_number < ir_vec.len() {
         let instruction = &ir_vec[instruction_number];
